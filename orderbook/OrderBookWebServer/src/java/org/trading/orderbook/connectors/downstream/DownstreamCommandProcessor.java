@@ -1,8 +1,14 @@
 package org.trading.orderbook.connectors.downstream;
 
+import java.net.InetSocketAddress;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import org.trading.orderbook.model.Order;
 import org.trading.orderbook.connectors.ConnectionManager;
 import org.trading.orderbook.connectors.IMessageListener;
@@ -19,22 +25,39 @@ public class DownstreamCommandProcessor extends AbstractCommandProcessor {
     @Inject
     private ConnectionManager clientManager;
 
-    private final IMessageListener messageListener; 
+    private final IMessageListener messageListener;
+
+    private InetSocketAddress binndingAddress;
 
     public DownstreamCommandProcessor() {
+        int listeningPort = 28001;
+        String listeningHostName = "localhost";
+
+        try {
+            Context env = (Context) new InitialContext().lookup("java:comp/env");
+            listeningPort = (Integer) env.lookup("downstream.listening.port");
+            listeningHostName = (String) env.lookup("downstream.listening.hostname");
+
+        } catch (Exception ex) {
+            Logger.getLogger(DownstreamCommandProcessor.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            binndingAddress = new InetSocketAddress(listeningHostName, listeningPort);
+        }
+
         messageListener = new IMessageListener() {
 
             @Override
             public void newMessage(String str) {
                 processMessage(str);
             }
-        };         
+        };
     }
 
     @PostConstruct
     public void onPostConstruct() {
-        clientManager.register(messageListener);
         start();
+        clientManager.register(messageListener);        
+        clientManager.start(binndingAddress);
     }
 
     public void dispatchOrderPlaced(Order order) {

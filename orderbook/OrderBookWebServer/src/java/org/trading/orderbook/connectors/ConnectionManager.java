@@ -7,6 +7,8 @@ import java.nio.channels.AsynchronousSocketChannel;
 import java.nio.channels.CompletionHandler;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.inject.Singleton;
 
 @Singleton
@@ -14,23 +16,35 @@ public class ConnectionManager {
 
     private AsynchronousServerSocketChannel asynchronousServerSocketChannel;
 
-    private IMessageListener incommingMessageListeners;    
+    private IMessageListener incommingMessageListeners;
 
-    private final List<Connection> connections = new ArrayList<>();
+    private final List<Connection> connections;
 
     public ConnectionManager() {
+        connections = new ArrayList<>();
+    }
 
+    public void start(InetSocketAddress binndingAddress) {
         try {
             asynchronousServerSocketChannel = AsynchronousServerSocketChannel.open();
             AsynchronousServerSocketChannel listener
-                    = asynchronousServerSocketChannel.bind(new InetSocketAddress("localhost", 28001));
+                    = asynchronousServerSocketChannel.bind(binndingAddress);
 
-            System.out.println("Start listening for new connections:");
+            Logger.getLogger(ConnectionManager.class.getName()).log(
+                    Level.INFO, "Start listening for new connections on "
+                    + binndingAddress.getHostName() + ":" + binndingAddress.getPort());
+
             listener.accept(null, new CompletionHandler<AsynchronousSocketChannel, Object>() {
 
                 @Override
                 public void completed(AsynchronousSocketChannel result, Object attachment) {
-                    System.out.println("Accepted a new connection");
+                    try {
+                        Logger.getLogger(ConnectionManager.class.getName()).log(
+                                Level.INFO, "Accepted a new connection from "
+                                + String.valueOf(result.getRemoteAddress()));
+                    } catch (IOException ex) {
+                        Logger.getLogger(ConnectionManager.class.getName()).log(Level.SEVERE, null, ex);
+                    }
 
                     Connection client = new Connection(result, attachment);
                     client.register(incommingMessageListeners);
@@ -60,5 +74,5 @@ public class ConnectionManager {
 
     public void register(IMessageListener listener) {
         this.incommingMessageListeners = listener;
-    }    
+    }
 }
