@@ -1,6 +1,5 @@
 package org.trading.orderbook.connectors;
 
-import org.trading.orderbook.connectors.downstream.DownstreamMessageListener;
 import java.nio.channels.AsynchronousSocketChannel;
 
 public class Connection {
@@ -11,14 +10,10 @@ public class Connection {
         endpoint = new CommunicationEndpoint(null, channel, attachment);
     }
 
-    public void register(IIncomingMessageListener listener) {
+    public void register(IMessageListener listener) {
         endpoint.register(listener);
     }
-
-    public void register(DownstreamMessageListener listener) {
-        endpoint.register(listener);
-    }
-
+    
     public void notifyClient(String message) {
         endpoint.write(message);
     }

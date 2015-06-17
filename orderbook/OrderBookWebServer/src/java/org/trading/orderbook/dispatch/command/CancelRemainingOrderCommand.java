@@ -2,7 +2,7 @@ package org.trading.orderbook.dispatch.command;
 
 import javax.json.JsonObject;
 import javax.json.spi.JsonProvider;
-import org.trading.orderbook.connectors.downstream.DownstreamMessageProcessor;
+import org.trading.orderbook.connectors.downstream.DownstreamCommandProcessor;
 import org.trading.orderbook.model.Order;
 import org.trading.orderbook.model.OrderManager;
 import org.trading.orderbook.session.SessionManager;
@@ -15,12 +15,12 @@ public class CancelRemainingOrderCommand implements DispatchCommand {
 
     private final OrderManager orderManager;
 
-    private final DownstreamMessageProcessor serverMessageProcessor;
+    private final DownstreamCommandProcessor serverMessageProcessor;
 
     public CancelRemainingOrderCommand(
             SessionManager sessionHandler,
             OrderManager orderManager,
-            DownstreamMessageProcessor serverMessageProcessor,
+            DownstreamCommandProcessor serverMessageProcessor,
             int id) {
         this.id = id;
         this.sessionHandler = sessionHandler;

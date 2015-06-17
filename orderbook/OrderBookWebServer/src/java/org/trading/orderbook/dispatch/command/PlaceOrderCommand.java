@@ -2,7 +2,7 @@ package org.trading.orderbook.dispatch.command;
 
 import javax.json.JsonObject;
 import javax.json.spi.JsonProvider;
-import org.trading.orderbook.connectors.downstream.DownstreamMessageProcessor;
+import org.trading.orderbook.connectors.downstream.DownstreamCommandProcessor;
 import org.trading.orderbook.model.Order;
 import org.trading.orderbook.model.OrderManager;
 import org.trading.orderbook.session.SessionManager;
@@ -13,14 +13,14 @@ public class PlaceOrderCommand implements DispatchCommand {
     
     private final SessionManager sessionHandler;
 
-    private final DownstreamMessageProcessor serverMessageProcessor;
+    private final DownstreamCommandProcessor serverMessageProcessor;
     
     private final int id;
 
     public PlaceOrderCommand(
             SessionManager sessionHandler, 
             OrderManager orderManager,
-            DownstreamMessageProcessor serverMessageProcessor,
+            DownstreamCommandProcessor serverMessageProcessor,
             int id) {
         this.sessionHandler = sessionHandler;
         this.orderManager = orderManager;

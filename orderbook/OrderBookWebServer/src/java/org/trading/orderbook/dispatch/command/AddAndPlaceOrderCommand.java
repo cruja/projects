@@ -1,6 +1,6 @@
 package org.trading.orderbook.dispatch.command;
 
-import org.trading.orderbook.connectors.downstream.DownstreamMessageProcessor;
+import org.trading.orderbook.connectors.downstream.DownstreamCommandProcessor;
 import org.trading.orderbook.model.Order;
 import org.trading.orderbook.model.OrderManager;
 import org.trading.orderbook.session.SessionManager;
@@ -11,14 +11,14 @@ public class AddAndPlaceOrderCommand implements DispatchCommand {
 
     private final SessionManager sessionHandler;
 
-    private final DownstreamMessageProcessor serverMessageProcessor;
+    private final DownstreamCommandProcessor serverMessageProcessor;
 
     private final Order order;
 
     public AddAndPlaceOrderCommand(
             SessionManager sessionHandler,
             OrderManager orderManager,
-            DownstreamMessageProcessor serverMessageProcessor,
+            DownstreamCommandProcessor serverMessageProcessor,
             Order order) {
         this.sessionHandler = sessionHandler;
         this.orderManager = orderManager;

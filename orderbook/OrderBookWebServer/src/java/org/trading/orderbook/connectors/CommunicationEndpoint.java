@@ -1,6 +1,5 @@
 package org.trading.orderbook.connectors;
 
-import org.trading.orderbook.connectors.downstream.DownstreamMessageListener;
 import java.io.IOException;
 import java.net.SocketAddress;
 import java.nio.ByteBuffer;
@@ -12,7 +11,6 @@ import java.util.List;
 import java.util.concurrent.Semaphore;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.trading.orderbook.connectors.upstream.IMessageListener;
 import org.trading.orderbook.connectors.upstream.MessageBuilder;
 import org.trading.orderbook.processor.AbstractMessageProcessor;
 import org.trading.orderbook.processor.IMessageProcessingCommand;
@@ -36,9 +34,7 @@ public class CommunicationEndpoint {
 
     private MessageBuilder messageBuilder;
 
-    private final List<IIncomingMessageListener> listenerList;
-
-    private final List<DownstreamMessageListener> incommingListenersList;
+    private final List<IMessageListener> listenerList;
 
     private final IMessageProcessor writerProcessor;
 
@@ -72,7 +68,6 @@ public class CommunicationEndpoint {
             Object attachment) {
 
         this.listenerList = new ArrayList<>();
-        this.incommingListenersList = new ArrayList<>();
         this.group = group;
         this.attachment = attachment;
         this.readBuffer = ByteBuffer.allocate(1024);
@@ -127,18 +122,18 @@ public class CommunicationEndpoint {
         writerProcessor = new AbstractMessageProcessor() {
 
             private final Semaphore semaphore = new Semaphore(1);
-            
-            public void enableAdvancing(){
+
+            public void enableAdvancing() {
                 semaphore.release();
             }
-            
+
             @Override
-            public void processMessage(String message) {                
+            public void processMessage(String message) {
                 try {
                     IMessageProcessingCommand command = new IMessageProcessingCommand() {
-                        
+
                         @Override
-                        public void process() {    
+                        public void process() {
                             try {
                                 semaphore.acquire();
                             } catch (InterruptedException ex) {
@@ -173,22 +168,12 @@ public class CommunicationEndpoint {
         };
     }
 
-    public void register(IIncomingMessageListener listener) {
+    public void register(IMessageListener listener) {
         this.listenerList.add(listener);
     }
-
-    public void register(DownstreamMessageListener listener) {
-        this.incommingListenersList.add(listener);
-    }
-
-    private void dispatchOutgoing(String message) {
-        for (IIncomingMessageListener listener : listenerList) {
-            listener.newMessage(message);
-        }
-    }
-
+   
     private void dispatchIncomming(String message) {
-        for (DownstreamMessageListener listener : incommingListenersList) {
+        for (IMessageListener listener : listenerList) {
             listener.newMessage(message);
         }
     }

@@ -2,7 +2,7 @@ package org.trading.orderbook.dispatch;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import org.trading.orderbook.connectors.downstream.DownstreamMessageProcessor;
+import org.trading.orderbook.connectors.downstream.DownstreamCommandProcessor;
 import org.trading.orderbook.model.Order;
 import org.trading.orderbook.model.OrderManager;
 import org.trading.orderbook.dispatch.command.AddAndPlaceOrderCommand;
@@ -26,7 +26,7 @@ public class DispatcherManager {
     private SessionManager sessionManager;
 
     @Inject
-    private DownstreamMessageProcessor serverMessageProcessor;
+    private DownstreamCommandProcessor serverMessageProcessor;
     
     private volatile boolean isStarted;
     

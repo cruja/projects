@@ -1,6 +1,7 @@
 package org.trading.orderbook.connectors.upstream;
 
 import java.nio.ByteBuffer;
+import org.trading.orderbook.connectors.IMessageListener;
 
 public class MessageBuilder {
 
