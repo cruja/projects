@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">                
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="style.css">                        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>       
+        <script src="websocket.js"></script>        
+    </head>
+    <body>
+
+        <div id="wrapper">
+            <h1>Orders Portal</h1>                                    
+            <br />
+            <div id="addOrder">
+                <div class="button"> <a href="#" OnClick="showOrderForm()">Prepare an order</a> </div>                
+                <form id="addOrderForm">
+                    <h3>New order:</h3>  
+                    <span>Book: 
+                        <select id="order_book">
+                            <option name="type" value="ob_1">ob_1</option>
+                            <option name="type" value="ob_2">ob_2</option>                            
+                        </select>
+                    </span>
+                    <br />
+                    <span>Type: 
+                        <select id="order_side">
+                            <option name="type" value="BUY">BUY</option>
+                            <option name="type" value="SELL">SELL</option>                            
+                        </select>
+                    </span>
+                    <br/>                    
+                    <span>Price:
+                        <input id="order_price" type="number" value="0"/>
+                    </span>
+                    <br/>
+                    <span>Size:
+                        <input id="order_size" type="number" value="0"/>
+                    </span>
+                    <br/>
+                    <span>Description:<br />
+                        <textarea name="description" id="ORDER_description" rows="2" cols="50"></textarea>
+                    </span>
+                    <div id="obs">
+                    </div>                    
+                    <br />
+                    <input type="button" class="button" value="Add" onclick=formOBSubmit()>
+                    <input type="reset" class="button" value="Cancel" onclick=hideOBForm()>
+                </form>
+            </div>
+            <br/>
+            <br/>
+            <div id="addOrderRange">
+                <div class="button"> <a href="#" OnClick="showRangeOrderForm()">Place order range</a> </div>
+                <form id="addOrderRangeForm">
+                    <h3>New order range:</h3>
+                    <span>Book: 
+                        <select id="order_book">
+                            <option name="type" value="ob_1">ob_1</option>
+                            <option name="type" value="ob_2">ob_2</option>                            
+                        </select>
+                    </span>
+                    <br />
+                    <span>Type: 
+                        <select id="order_side">
+                            <option name="type" value="BUY">BUY</option>
+                            <option name="type" value="SELL">SELL</option>                            
+                        </select>
+                    </span>
+                    <br/>
+                    <span>Size:
+                        <input id="order_size" type="number" value="0"/>
+                    </span>
+                    </br>
+                    <span>Start Price:
+                        <input id="start_price" type="number" value="0"/>
+                    </span>
+                    </br>
+                    <span>Step Price:
+                        <input id="step" type="number" value="0"/>
+                    </span>
+                    </br>
+                    <span>Levels:
+                        <input id="levels" type="number" value="0"/>
+                    </span>
+                    </br>
+                    <span>Direction: 
+                        <select id="direction">
+                            <option name="type" value="UP">UP</option>
+                            <option name="type" value="DOWN">DOWN</option>                            
+                        </select>
+                    </span>
+                    </br>                    
+                    <input type="button" class="button" value="Add" onclick=formOrderRangeSubmit()>
+                    <input type="reset" class="button" value="Cancel" onclick=hideOrderRangeForm()>
+                </form>
+            </div>            
+            <br/>
+            <br/>
+            <div id="removeAllNotPlaced">
+                <div class="button"> <a href="#" OnClick="removeAllNotPlaced()">Remove not placed orders</a> </div>
+            </div>
+            <br/>
+            <br/>            
+            <br/>
+            <h3>My Orders:</h3>
+            <br/>
+            <div id="orders">
+            </div>
+        </div>                  
+    </body>
+</html>
