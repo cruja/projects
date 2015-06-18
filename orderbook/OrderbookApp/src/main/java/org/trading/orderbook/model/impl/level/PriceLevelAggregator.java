@@ -1,7 +1,7 @@
 package org.trading.orderbook.model.impl.level;
 
 
-import org.trading.orderbook.model.IAggregatorObserver;
+import org.trading.orderbook.model.IAggregatorListener;
 import org.trading.orderbook.model.impl.DefaultModelObserver;
 import org.trading.orderbook.model.impl.side.OrdersPerSide;
 
@@ -16,16 +16,16 @@ public class PriceLevelAggregator extends DefaultModelObserver {
 
     private final TreeMap<Double, PriceLevel> priceLevels;
 
-    private final List<IAggregatorObserver> aggregatorObservers;
+    private final List<IAggregatorListener> listeners;
 
     public PriceLevelAggregator(String name) {
         this.name = name;
-        priceLevels = new TreeMap<Double, PriceLevel>();
-        aggregatorObservers = new ArrayList<IAggregatorObserver>();
+        priceLevels = new TreeMap<>();
+        listeners = new ArrayList<>();
     }
 
-    public void register(IAggregatorObserver aggregatorObserver) {
-        aggregatorObservers.add(aggregatorObserver);
+    public void register(IAggregatorListener aggregatorObserver) {
+        listeners.add(aggregatorObserver);
     }
 
     @Override
@@ -60,21 +60,21 @@ public class PriceLevelAggregator extends DefaultModelObserver {
     }
 
     private void fireLevelAdded(double price, PriceLevel priceLevel) {
-        for (IAggregatorObserver observer : aggregatorObservers) {
-            observer.onPriceLevelAdded(price, priceLevel);
-        }
+        listeners.forEach((listener) -> {
+            listener.onPriceLevelAdded(price, priceLevel);
+        });
     }
 
     private void fireLevelRemoved(double price) {
-        for (IAggregatorObserver observer : aggregatorObservers) {
-            observer.onPriceLevelRemoved(price);
-        }
+        listeners.forEach((listener) -> {
+            listener.onPriceLevelRemoved(price);
+        });
     }
 
     private void fireLevelUpdated(double price, PriceLevel priceLevel) {
-        for (IAggregatorObserver observer : aggregatorObservers) {
-            observer.onPriceLevelUpdated(price, priceLevel);
-        }
+        listeners.forEach((listener) -> {
+            listener.onPriceLevelUpdated(price, priceLevel);
+        });
     }
 
     @Override

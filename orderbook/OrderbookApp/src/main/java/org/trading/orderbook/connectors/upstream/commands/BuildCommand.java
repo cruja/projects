@@ -1,12 +1,11 @@
 package org.trading.orderbook.connectors.upstream.commands;
 
 import org.trading.orderbook.connectors.commands.AbstractBuildCommand;
-import org.trading.orderbook.consumer.exception.InvalidEventException;
+import org.trading.orderbook.infra.connectors.processor.IMessageProcessingCommand;
 import org.trading.orderbook.model.IModelObserver;
 import org.trading.orderbook.model.IOrderStream;
 import org.trading.orderbook.model.impl.Action;
 import org.trading.orderbook.model.impl.Order;
-import org.trading.orderbook.connectors.processor.IMessageProcessingCommand;
 
 import java.util.concurrent.BlockingQueue;
 

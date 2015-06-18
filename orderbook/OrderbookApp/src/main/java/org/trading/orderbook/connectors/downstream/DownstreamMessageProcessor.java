@@ -1,18 +1,13 @@
-package org.trading.orderbook.connectors.upstream;
-
+package org.trading.orderbook.connectors.downstream;
 
 import org.trading.orderbook.connectors.commands.ICommandBuilder;
 import org.trading.orderbook.connectors.processor.AbstractCommandProcessor;
-import org.trading.orderbook.model.IOrderStream;
 
-public class UpstreamMessageProcessor extends AbstractCommandProcessor {
-
-    private final IOrderStream orderStream;
+public class DownstreamMessageProcessor extends AbstractCommandProcessor {
 
     private final ICommandBuilder commandBuilder;
 
-    public UpstreamMessageProcessor(IOrderStream orderStream, ICommandBuilder commandBuilder) {
-        this.orderStream = orderStream;
+    public DownstreamMessageProcessor(ICommandBuilder commandBuilder) {
         this.commandBuilder = commandBuilder;
         start();
     }

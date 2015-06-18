@@ -1,13 +1,12 @@
 package org.trading.orderbook.connectors.upstream;
 
-import org.trading.orderbook.connectors.IIncomingMessageListener;
 import org.trading.orderbook.connectors.upstream.commands.UpstreamCommandBuilder;
-import org.trading.orderbook.consumer.exception.InvalidEventException;
+import org.trading.orderbook.infra.connectors.ActiveConnection;
+import org.trading.orderbook.infra.connectors.Connection;
+import org.trading.orderbook.infra.connectors.IMessageListener;
 import org.trading.orderbook.model.IContext;
 import org.trading.orderbook.model.IModelObserver;
 import org.trading.orderbook.model.impl.AbstractOrderStream;
-import org.trading.orderbook.model.impl.Action;
-import org.trading.orderbook.model.impl.Order;
 import org.trading.orderbook.model.impl.side.OrdersPerSide;
 
 import java.net.InetSocketAddress;
@@ -16,9 +15,9 @@ public class IncomingOrderStream extends AbstractOrderStream {
 
     InetSocketAddress REMOTE_ADDRESS = new InetSocketAddress("localhost", 28001);
 
-    private UpstreamConnection upstreamConnection;
+    private Connection upstreamConnection;
 
-    private IIncomingMessageListener listener;
+    private IMessageListener listener;
 
     private final UpstreamMessageProcessor messageProcessor;
 
@@ -86,9 +85,9 @@ public class IncomingOrderStream extends AbstractOrderStream {
 
     @Override
     public void openStream() throws Exception {
-        upstreamConnection = new UpstreamConnection(REMOTE_ADDRESS);
+        upstreamConnection = new ActiveConnection(REMOTE_ADDRESS);
 
-        listener = new IIncomingMessageListener() {
+        listener = new IMessageListener() {
             @Override
             public void newMessage(String str) {
                 messageProcessor.processMessage(str);

@@ -4,7 +4,7 @@ public interface IOrderBook extends IOrderConsumerComponent {
 
     public void register(IModelObserver modelObserver);
 
-    public void registerForAggregator(IAggregatorObserver aggregatorObserver);
+    public void registerForAggregator(IAggregatorListener aggregatorObserver);
 
     public double getLowestPrice(boolean isBuySide);
 

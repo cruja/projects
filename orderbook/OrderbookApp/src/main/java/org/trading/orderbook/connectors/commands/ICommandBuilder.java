@@ -1,8 +1,8 @@
 package org.trading.orderbook.connectors.commands;
 
 
+import org.trading.orderbook.infra.connectors.processor.IMessageProcessingCommand;
 import org.trading.orderbook.model.IOrderStream;
-import org.trading.orderbook.connectors.processor.IMessageProcessingCommand;
 
 import java.util.concurrent.BlockingQueue;
 

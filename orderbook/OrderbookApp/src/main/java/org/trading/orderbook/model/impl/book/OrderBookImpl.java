@@ -1,6 +1,6 @@
 package org.trading.orderbook.model.impl.book;
 
-import org.trading.orderbook.model.IAggregatorObserver;
+import org.trading.orderbook.model.IAggregatorListener;
 import org.trading.orderbook.model.IOrderBook;
 import org.trading.orderbook.model.IModelObserver;
 import org.trading.orderbook.model.impl.Order;
@@ -28,7 +28,7 @@ public class OrderBookImpl implements IOrderBook {
     // an order with same ID as one existent will have no effect when deleted
     private final OrderIdContainer idContainer;
 
-    private final List<IAggregatorObserver> modelObservers;
+    private final List<IAggregatorListener> modelObservers;
 
     /**
      * @param name         the name of the order book
@@ -49,7 +49,7 @@ public class OrderBookImpl implements IOrderBook {
     }
 
     @Override
-    public void registerForAggregator(IAggregatorObserver aggregatorObserver) {
+    public void registerForAggregator(IAggregatorListener aggregatorObserver) {
         aggregator.register(aggregatorObserver);
     }
 

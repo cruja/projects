@@ -4,7 +4,7 @@ package org.trading.orderbook.model;
 import org.trading.orderbook.model.impl.level.PriceLevel;
 import org.trading.orderbook.model.impl.side.OrdersPerSide;
 
-public interface IAggregatorObserver {
+public interface IAggregatorListener {
 
     public void onPriceLevelAdded(double price, PriceLevel priceLevel);
 
