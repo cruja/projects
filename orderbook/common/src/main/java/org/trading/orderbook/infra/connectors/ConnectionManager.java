@@ -1,4 +1,4 @@
-package org.trading.orderbook.connectors;
+package org.trading.orderbook.infra.connectors;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
