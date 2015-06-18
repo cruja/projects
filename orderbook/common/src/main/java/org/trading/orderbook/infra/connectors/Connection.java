@@ -1,13 +1,11 @@
 package org.trading.orderbook.infra.connectors;
 
-import java.net.InetSocketAddress;
-
 public class Connection {
 
-    private final CommunicationEndpoint endpoint;
+    protected final CommunicationEndpoint endpoint;
 
-    public Connection(InetSocketAddress remote) {
-        endpoint = new CommunicationEndpoint(remote);
+    public Connection(CommunicationEndpoint endpoint) {
+        this.endpoint = endpoint;
     }
 
     public void register(IMessageListener listener) {
@@ -16,5 +14,9 @@ public class Connection {
 
     public void sendMessage(String message) {
         endpoint.write(message);
+    }
+
+    public void read() {
+        endpoint.read();
     }
 }

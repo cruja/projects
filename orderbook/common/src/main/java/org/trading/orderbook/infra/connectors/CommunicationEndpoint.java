@@ -179,7 +179,7 @@ public class CommunicationEndpoint {
         }
     }
 
-    private void read() {
+    public void read() {
         reader.run();
     }
 
