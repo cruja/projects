@@ -1,7 +1,7 @@
 package org.trading.orderbook.connectors.commands;
 
 import java.util.concurrent.BlockingQueue;
-import org.trading.orderbook.processor.IMessageProcessingCommand;
+import org.trading.orderbook.infra.connectors.processor.IMessageProcessingCommand;
 
 public interface ICommandBuilder {
 

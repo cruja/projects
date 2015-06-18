@@ -5,7 +5,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import org.trading.orderbook.connectors.upstream.commands.UpstreamCommandBuilder;
 import org.trading.orderbook.connectors.commands.ICommandBuilder;
-import org.trading.orderbook.processor.AbstractCommandProcessor;
+import org.trading.orderbook.order.command.AbstractCommandProcessor;
 import org.trading.orderbook.session.SessionManager;
 
 @Singleton

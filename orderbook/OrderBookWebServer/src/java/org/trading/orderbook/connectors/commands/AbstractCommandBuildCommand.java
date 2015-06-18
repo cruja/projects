@@ -1,8 +1,9 @@
 package org.trading.orderbook.connectors.commands;
 
 import java.util.concurrent.BlockingQueue;
-import org.trading.orderbook.processor.IMessageProcessingCommand;
+
 import org.trading.orderbook.dispatch.DispatcherManager;
+import org.trading.orderbook.infra.connectors.processor.IMessageProcessingCommand;
 import org.trading.orderbook.session.SessionManager;
 
 public abstract class AbstractCommandBuildCommand implements IOrderCommand {

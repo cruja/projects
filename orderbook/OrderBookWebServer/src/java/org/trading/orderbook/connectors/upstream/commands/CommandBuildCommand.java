@@ -15,8 +15,8 @@ import javax.json.JsonReader;
 import org.trading.orderbook.model.Side;
 import org.trading.orderbook.connectors.commands.AbstractCommandBuildCommand;
 import org.trading.orderbook.connectors.upstream.commands.incomming.RemoveAllNotPLacedCommand;
-import org.trading.orderbook.processor.IMessageProcessingCommand;
 import org.trading.orderbook.dispatch.DispatcherManager;
+import org.trading.orderbook.infra.connectors.processor.IMessageProcessingCommand;
 import org.trading.orderbook.session.SessionManager;
 
 public class CommandBuildCommand extends AbstractCommandBuildCommand {

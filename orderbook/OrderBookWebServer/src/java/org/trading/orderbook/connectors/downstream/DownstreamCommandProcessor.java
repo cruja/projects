@@ -8,28 +8,27 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.naming.Context;
 import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import org.trading.orderbook.model.Order;
-import org.trading.orderbook.connectors.ConnectionManager;
-import org.trading.orderbook.connectors.IMessageListener;
 import org.trading.orderbook.connectors.commands.ICommandBuilder;
 import org.trading.orderbook.connectors.downstream.commands.DownstreamCommandBuilder;
-import org.trading.orderbook.processor.AbstractCommandProcessor;
+import org.trading.orderbook.infra.connectors.ConnectionManager;
+import org.trading.orderbook.infra.connectors.IMessageListener;
+import org.trading.orderbook.order.command.AbstractCommandProcessor;
 
 @Singleton
 public class DownstreamCommandProcessor extends AbstractCommandProcessor {
 
     @Inject
     private DownstreamCommandBuilder commandBuilder;
-
-    @Inject
-    private ConnectionManager clientManager;
+    
+    private final ConnectionManager connectionManager;
 
     private final IMessageListener messageListener;
 
     private InetSocketAddress binndingAddress;
 
     public DownstreamCommandProcessor() {
+        connectionManager = new ConnectionManager();
         int listeningPort = 28001;
         String listeningHostName = "localhost";
 
@@ -56,28 +55,28 @@ public class DownstreamCommandProcessor extends AbstractCommandProcessor {
     @PostConstruct
     public void onPostConstruct() {
         start();
-        clientManager.register(messageListener);        
-        clientManager.start(binndingAddress);
+        connectionManager.register(messageListener);        
+        connectionManager.start(binndingAddress);
     }
 
     public void dispatchOrderPlaced(Order order) {
         String message = order.serialize("place");
-        clientManager.dispatchToAllConnections(message);
+        connectionManager.dispatchToAllConnections(message);
     }
 
     public void dispatchOrderCancelled(Order order) {
         String message = order.serialize("cancel");
-        clientManager.dispatchToAllConnections(message);
+        connectionManager.dispatchToAllConnections(message);
     }
 
     public void dispatchOrderRemove(Order order) {
         String message = order.serialize("remove");
-        clientManager.dispatchToAllConnections(message);
+        connectionManager.dispatchToAllConnections(message);
     }
 
     private void dispatchOrderAdd(Order order) {
         String message = order.serialize("add");
-        clientManager.dispatchToAllConnections(message);
+        connectionManager.dispatchToAllConnections(message);
     }
 
     @Override

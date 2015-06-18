@@ -7,8 +7,8 @@ import org.trading.orderbook.connectors.commands.AbstractCommandBuildCommand;
 import org.trading.orderbook.connectors.downstream.commands.incomming.OrderFilledCommand;
 import org.trading.orderbook.connectors.downstream.commands.incomming.OrderPartiallyFilledCommand;
 import org.trading.orderbook.connectors.downstream.commands.incomming.OrderPlacedCommand;
-import org.trading.orderbook.processor.IMessageProcessingCommand;
 import org.trading.orderbook.dispatch.DispatcherManager;
+import org.trading.orderbook.infra.connectors.processor.IMessageProcessingCommand;
 import org.trading.orderbook.session.SessionManager;
 
 public class CommandBuildCommand extends AbstractCommandBuildCommand {

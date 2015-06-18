@@ -1,8 +1,10 @@
-package org.trading.orderbook.processor;
+package org.trading.orderbook.order.command;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.trading.orderbook.connectors.commands.ICommandBuilder;
+import org.trading.orderbook.infra.connectors.processor.AbstractMessageProcessor;
+import org.trading.orderbook.infra.connectors.processor.IMessageProcessingCommand;
 
 public abstract class AbstractCommandProcessor extends AbstractMessageProcessor {
 

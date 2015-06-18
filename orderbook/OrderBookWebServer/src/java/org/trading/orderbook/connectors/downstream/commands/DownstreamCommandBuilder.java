@@ -5,8 +5,8 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import org.trading.orderbook.connectors.commands.AbstractCommandBuildCommand;
 import org.trading.orderbook.connectors.commands.ICommandBuilder;
-import org.trading.orderbook.processor.IMessageProcessingCommand;
 import org.trading.orderbook.dispatch.DispatcherManager;
+import org.trading.orderbook.infra.connectors.processor.IMessageProcessingCommand;
 import org.trading.orderbook.session.SessionManager;
 
 @ApplicationScoped
