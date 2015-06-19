@@ -1,5 +1,6 @@
 package org.trading.orderbook.model.impl.book;
 
+import org.trading.orderbook.connectors.upstream.UpstreamManager;
 import org.trading.orderbook.gui.OrderBookGui;
 import org.trading.orderbook.model.IModelObserver;
 import org.trading.orderbook.model.IOrderBook;
@@ -22,13 +23,13 @@ public class OrderBookManager {
 
     public void startProcessing() {
         for (IOrderConsumerComponent book : map.values()) {
-            book.onStart();
+            book.start();
         }
     }
 
     public void finishProcessing() {
         for (IOrderConsumerComponent book : map.values()) {
-            book.onStop();
+            book.stop();
         }
     }
 
@@ -37,18 +38,17 @@ public class OrderBookManager {
     }
 
     public IOrderConsumerComponent create(
-            String bookName,
-            IModelObserver modelObserver) {
+            String bookName) {
 
         IOrderBook orderBook = new OrderBookImpl(
                 bookName);
-        orderBook.register(modelObserver);
+        orderBook.register(UpstreamManager.getInstance().getOutgoingStream());
         if (true) {
             orderBook.register(
                     new OrderBookGui(bookName));
         }
         IOrderConsumerComponent orderBookWorker = new OrderBookWorker(orderBook);
-        orderBookWorker.onStart();
+        orderBookWorker.start();
         map.put(bookName, orderBookWorker);
         return orderBookWorker;
     }

@@ -26,12 +26,12 @@ public class OrderBookWorker implements IOrderConsumerComponent {
     }
 
     @Override
-    public void onStart() {
+    public void start() {
         worker.start();
     }
 
     @Override
-    public void onStop() {
+    public void stop() {
         worker.stop();
         try {
             latch.await();

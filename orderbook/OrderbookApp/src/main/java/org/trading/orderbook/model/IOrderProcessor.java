@@ -23,7 +23,7 @@ public interface IOrderProcessor {
      * @throws InvalidEventException Whenever the above properties are not meaningful for the specific action
      */
 
-    void handleEvent(Action action, Order order, IModelObserver modelObserver) throws InvalidEventException;
+    void handleEvent(Action action, Order order) throws InvalidEventException;
 
     /**
      * Called by the environment when no more events will be handled.

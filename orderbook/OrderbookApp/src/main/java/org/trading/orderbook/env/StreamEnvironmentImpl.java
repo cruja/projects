@@ -1,21 +1,10 @@
 package org.trading.orderbook.env;
 
-import org.trading.orderbook.connectors.upstream.IncomingOrderStream;
+import org.trading.orderbook.connectors.upstream.UpstreamManager;
 
 public class StreamEnvironmentImpl extends EnvironmentImpl {
 
     public StreamEnvironmentImpl(String[] args) {
-        super(args, new IncomingOrderStream());
+        super(args, UpstreamManager.getInstance());
     }
-
-    @Override
-    public final void run() {
-        onStart();
-        try {
-            openStream();
-        } catch (Exception e) {
-            onStop();
-        }
-    }
-
 }

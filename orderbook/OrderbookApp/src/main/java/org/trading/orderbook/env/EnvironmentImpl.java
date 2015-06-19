@@ -9,14 +9,14 @@ public abstract class EnvironmentImpl implements AppEnvironment {
 
     private static Logger LOGGER = LoggerFactory.getLogger(EnvironmentImpl.class);
 
-    protected final IOrderStream orderStream;
+    private final IOrderProcessorManagerCompCtrl controller;
 
     private final IOrderProcessorManager orderProcessorManager;
 
-    protected EnvironmentImpl(String[] args, IOrderStream orderStream) {
+    protected EnvironmentImpl(String[] args, IOrderProcessorManagerCompCtrl controller) {
+        this.controller = controller;
         this.orderProcessorManager = new OrderProcessorManager();
-        this.orderStream = orderStream;
-        this.orderStream.register(this.orderProcessorManager);
+        this.controller.register(this.orderProcessorManager);
     }
 
     @Override
@@ -26,30 +26,11 @@ public abstract class EnvironmentImpl implements AppEnvironment {
 
     @Override
     public void run() {
-        onStart();
         try {
-            openStream();
+            controller.start();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            onStop();
         }
-    }
-
-    /**
-     * Sends a stream of orders to the {@link org.trading.orderbook.model.IOrderProcessor}s.
-     *
-     * @throws Exception if there is an error.
-     */
-    public void openStream() throws Exception {
-        this.orderStream.openStream();
-    }
-
-    protected void onStart() {
-        this.orderProcessorManager.onStart();
-    }
-
-    protected void onStop() {
-        this.orderProcessorManager.onStop();
     }
 }

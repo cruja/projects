@@ -2,7 +2,7 @@ package org.trading.orderbook.model;
 
 public interface IComponentController {
 
-    public void onStart();
+    public void start();
 
-    public void onStop();
+    public void stop();
 }

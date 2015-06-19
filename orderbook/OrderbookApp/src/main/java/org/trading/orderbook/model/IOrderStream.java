@@ -10,6 +10,6 @@ public interface IOrderStream {
 
     void openStream() throws Exception;
 
-    public void publishEvent(Action action, Order order, IModelObserver callback)
+    public void publishEvent(Action action, Order order)
             throws InvalidEventException;
 }

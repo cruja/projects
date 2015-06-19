@@ -34,7 +34,7 @@ public class OrderBookDispatcher implements IOrderProcessor {
     }
 
     @Override
-    public void handleEvent(Action action, Order order, IModelObserver modelObserver) throws InvalidEventException {
+    public void handleEvent(Action action, Order order) throws InvalidEventException {
         if (action == null) {
             throw new InvalidEventException("Action is not allowed to be null");
         }
@@ -43,42 +43,42 @@ public class OrderBookDispatcher implements IOrderProcessor {
         }
         switch (action) {
             case ADDORDER:
-                add(order, modelObserver);
+                add(order);
                 break;
             case DELETEORDER:
-                delete(order, modelObserver);
+                delete(order);
                 break;
             case CANCELORDER:
-                cancel(order, modelObserver);
+                cancel(order);
                 break;
         }
     }
 
-    private void add(Order order, IModelObserver modelObserver) throws InvalidEventException {
+    private void add(Order order) throws InvalidEventException {
         final String bookName = order.getOrderBook();
-        IOrderConsumerComponent orderBook = getBook(bookName, modelObserver);
+        IOrderConsumerComponent orderBook = getBook(bookName);
         orderBook.add(order);
     }
 
-    private void delete(Order order, IModelObserver modelObserver) {
+    private void delete(Order order) {
         final String bookName = order.getOrderBook();
-        IOrderConsumerComponent orderBook = getBook(bookName, modelObserver);
+        IOrderConsumerComponent orderBook = getBook(bookName);
         orderBook.delete(order);
     }
 
-    private void cancel(Order order, IModelObserver modelObserver) {
+    private void cancel(Order order) {
         final String bookName = order.getOrderBook();
-        IOrderConsumerComponent orderBook = getBook(bookName, modelObserver);
+        IOrderConsumerComponent orderBook = getBook(bookName);
         orderBook.delete(order);
     }
 
 
-    private IOrderConsumerComponent getBook(String bookName, IModelObserver modelObserver) {
+    private IOrderConsumerComponent getBook(String bookName) {
         IOrderConsumerComponent orderBook = orderBookManager.find(bookName);
         if (orderBook == null) {
             orderBook = orderBookManager.create(
-                    bookName,
-                    modelObserver);
+                    bookName
+            );
         }
         return orderBook;
     }

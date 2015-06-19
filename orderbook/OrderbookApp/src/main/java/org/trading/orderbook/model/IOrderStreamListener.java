@@ -6,5 +6,5 @@ import org.trading.orderbook.model.impl.Order;
 
 public interface IOrderStreamListener {
 
-    void notifyEvent(Action action, Order order, IModelObserver callback) throws InvalidEventException;
+    void notifyEvent(Action action, Order order) throws InvalidEventException;
 }

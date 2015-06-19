@@ -14,10 +14,9 @@ public class BuildCommand extends AbstractBuildCommand {
     public BuildCommand(
             String message,
             IOrderStream orderStream,
-            IModelObserver callback,
             BlockingQueue<IMessageProcessingCommand> queue) {
 
-        super(message, orderStream, callback, queue);
+        super(message, orderStream, queue);
     }
 
     @Override
@@ -36,26 +35,22 @@ public class BuildCommand extends AbstractBuildCommand {
                 case "add":
                     orderStream.publishEvent(
                             Action.ADDORDER,
-                            new Order(orderId, orderBook, isBuy, size, volume),
-                            callback);
+                            new Order(orderId, orderBook, isBuy, size, volume));
                     break;
                 case "place":
                     orderStream.publishEvent(
                             Action.ADDORDER,
-                            new Order(orderId, orderBook, isBuy, size, volume),
-                            callback);
+                            new Order(orderId, orderBook, isBuy, size, volume));
                     break;
                 case "cancel":
                     orderStream.publishEvent(
                             Action.CANCELORDER,
-                            new Order(orderId, orderBook, isBuy, size, volume),
-                            callback);
+                            new Order(orderId, orderBook, isBuy, size, volume));
                     break;
                 case "remove":
                     orderStream.publishEvent(
                             Action.DELETEORDER,
-                            new Order(orderId, orderBook, isBuy, size, volume),
-                            callback);
+                            new Order(orderId, orderBook, isBuy, size, volume));
                     break;
             }
         } catch (Exception e) {

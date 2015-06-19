@@ -3,6 +3,7 @@ package org.trading.orderbook.model.impl.book;
 import org.trading.orderbook.model.IAggregatorListener;
 import org.trading.orderbook.model.IOrderBook;
 import org.trading.orderbook.model.IModelObserver;
+import org.trading.orderbook.model.IOrderStreamListener;
 import org.trading.orderbook.model.impl.Order;
 import org.trading.orderbook.model.impl.OrderIdContainer;
 import org.trading.orderbook.model.impl.level.PriceLevelAggregator;
@@ -50,11 +51,11 @@ public class OrderBookImpl implements IOrderBook {
     }
 
     @Override
-    public void onStart() {
+    public void start() {
     }
 
     @Override
-    public void onStop() {
+    public void stop() {
     }
 
     /**
