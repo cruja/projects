@@ -1,5 +1,7 @@
 package org.trading.orderbook.infra.connectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.trading.orderbook.infra.connectors.processor.AbstractMessageProcessor;
 import org.trading.orderbook.infra.connectors.processor.IMessageProcessingCommand;
 import org.trading.orderbook.infra.connectors.processor.IMessageProcessor;
@@ -13,10 +15,10 @@ import java.nio.channels.CompletionHandler;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Semaphore;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class CommunicationEndpoint {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(CommunicationEndpoint.class);
 
     private SocketAddress address;
     private AsynchronousSocketChannel channel;
@@ -83,13 +85,13 @@ public class CommunicationEndpoint {
         this.completionHandler = new CompletionHandler<Void, Object>() {
             @Override
             public void completed(Void result, Object attachment) {
-                System.out.println("Connected to " + address);
+                LOGGER.info("Connected to " + address);
                 read();
             }
 
             @Override
             public void failed(Throwable exc, Object attachment) {
-                System.err.println("Failed connecting to " + address + "due to " + exc.getMessage());
+                LOGGER.error("Failed connecting to " + address, exc);
                 exc.printStackTrace();
             }
         };
@@ -102,7 +104,7 @@ public class CommunicationEndpoint {
 
             @Override
             public void failed(Throwable exc, Object attachment) {
-                System.out.println("Failed reading due to " + exc.getMessage());
+                LOGGER.error("Failed reading ", exc);
                 exc.printStackTrace();
             }
         };
@@ -110,13 +112,13 @@ public class CommunicationEndpoint {
             @Override
             public void completed(Integer result, Object attachment) {
                 writeBuffer.flip();
-                System.out.println("Sent " + result + " bytes: " + new String(writeBuffer.array()));
+                LOGGER.info("Sent " + result + " bytes: " + new String(writeBuffer.array()));
                 writerProcessor.enableAdvancing();
             }
 
             @Override
             public void failed(Throwable exc, Object attachment) {
-                System.out.println("Failed sending due to " + exc.getMessage());
+                LOGGER.error("Failed sending ", exc);
                 exc.printStackTrace();
             }
         };
@@ -138,7 +140,7 @@ public class CommunicationEndpoint {
                             try {
                                 semaphore.acquire();
                             } catch (InterruptedException ex) {
-                                Logger.getLogger(CommunicationEndpoint.class.getName()).log(Level.SEVERE, null, ex);
+                                LOGGER.error("", ex);
                             }
                             writeBuffer = ByteBuffer.wrap(message.getBytes());
                             writer.run();
@@ -146,7 +148,7 @@ public class CommunicationEndpoint {
                     };
                     commandsQueue.put(command);
                 } catch (InterruptedException ex) {
-                    Logger.getLogger(CommunicationEndpoint.class.getName()).log(Level.SEVERE, null, ex);
+                    LOGGER.error("", ex);
                 }
             }
         };

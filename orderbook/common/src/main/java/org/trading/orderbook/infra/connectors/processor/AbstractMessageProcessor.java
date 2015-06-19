@@ -1,12 +1,16 @@
 package org.trading.orderbook.infra.connectors.processor;
 
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public abstract class AbstractMessageProcessor implements IMessageProcessor {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractMessageProcessor.class);
 
     protected final BlockingQueue<IMessageProcessingCommand> commandsQueue;
 
@@ -26,7 +30,7 @@ public abstract class AbstractMessageProcessor implements IMessageProcessor {
                         command = commandsQueue.take();
                         command.process();
                     } catch (Exception ex) {
-                        Logger.getLogger(AbstractMessageProcessor.class.getName()).log(Level.SEVERE, null, ex);
+                        LOGGER.error("", ex);
                     }
                 }
             }

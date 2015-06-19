@@ -1,8 +1,13 @@
 package org.trading.orderbook.infra.connectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.nio.ByteBuffer;
 
 public class MessageBuilder {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(MessageBuilder.class);
 
     private final ByteBuffer buffer;
 
@@ -23,7 +28,9 @@ public class MessageBuilder {
 
     private void processBuffer(Integer result) {
         String bufferContent = new String(messageBytes, 0, buffer.position()).trim();
-        System.out.println("Received: " + result + " bytes, buffer content: [" + bufferContent + "]");
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Received: " + result + " bytes, buffer content: [" + bufferContent + "]");
+        }
         this.charBuffer.append(bufferContent);
     }
 }

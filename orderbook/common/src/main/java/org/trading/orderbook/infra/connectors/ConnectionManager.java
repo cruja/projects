@@ -1,5 +1,8 @@
 package org.trading.orderbook.infra.connectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.channels.AsynchronousServerSocketChannel;
@@ -7,13 +10,10 @@ import java.nio.channels.AsynchronousSocketChannel;
 import java.nio.channels.CompletionHandler;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.trading.orderbook.infra.connectors.Connection;
-import org.trading.orderbook.infra.connectors.IMessageListener;
-import org.trading.orderbook.infra.connectors.PassiveConnection;
 
 public class ConnectionManager {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(ConnectionManager.class);
 
     private AsynchronousServerSocketChannel asynchronousServerSocketChannel;
 
@@ -31,8 +31,7 @@ public class ConnectionManager {
             AsynchronousServerSocketChannel listener
                     = asynchronousServerSocketChannel.bind(binndingAddress);
 
-            Logger.getLogger(ConnectionManager.class.getName()).log(
-                    Level.INFO, "Start listening for new connections on "
+            LOGGER.info("Start listening for new connections on "
                     + binndingAddress.getHostName() + ":" + binndingAddress.getPort());
 
             listener.accept(null, new CompletionHandler<AsynchronousSocketChannel, Object>() {
@@ -40,11 +39,10 @@ public class ConnectionManager {
                 @Override
                 public void completed(AsynchronousSocketChannel result, Object attachment) {
                     try {
-                        Logger.getLogger(ConnectionManager.class.getName()).log(
-                                Level.INFO, "Accepted a new connection from "
+                        LOGGER.info("Accepted a new connection from "
                                 + String.valueOf(result.getRemoteAddress()));
                     } catch (IOException ex) {
-                        Logger.getLogger(ConnectionManager.class.getName()).log(Level.SEVERE, null, ex);
+                        LOGGER.error("", ex);
                     }
 
                     Connection client = new PassiveConnection(result, attachment);
@@ -58,7 +56,7 @@ public class ConnectionManager {
 
                 @Override
                 public void failed(Throwable exc, Object attachment) {
-                    System.out.println("Failed accepting a new connection");
+                    LOGGER.error("Failed accepting a new connection");
                 }
             });
 
