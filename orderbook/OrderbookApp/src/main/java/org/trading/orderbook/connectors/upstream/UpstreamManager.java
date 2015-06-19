@@ -14,9 +14,30 @@ public class UpstreamManager implements IOrderProcessorManagerCompCtrl {
 
     private final static UpstreamManager INSTANCE = new UpstreamManager();
 
-    private final static InetSocketAddress REMOTE_ADDRESS = new InetSocketAddress("localhost", 28001);
+    private static InetSocketAddress REMOTE_ADDRESS = new InetSocketAddress("localhost", 28001);
 
     public static UpstreamManager getInstance() {
+        return INSTANCE;
+    }
+
+    public static UpstreamManager getInstance(String[] args) throws UpstreamInitializationException {
+
+        if (args.length == 0) {
+            return INSTANCE;
+        }
+
+        if (args.length != 2 || "".equals(args[0].trim()) || "".equals(args[1].trim())) {
+            throw new UpstreamInitializationException("Upstream expected hostname and port");
+        }
+
+        try {
+            String hostname = args[0].trim();
+            int port = Integer.parseInt(args[1].trim());
+            REMOTE_ADDRESS = new InetSocketAddress(hostname, port);
+        } catch (Exception e) {
+            throw new UpstreamInitializationException("Upstream expected hostname and port");
+        }
+
         return INSTANCE;
     }
 

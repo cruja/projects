@@ -4,7 +4,7 @@ import org.trading.orderbook.connectors.upstream.UpstreamManager;
 
 public class StreamEnvironmentImpl extends EnvironmentImpl {
 
-    public StreamEnvironmentImpl(String[] args) {
-        super(args, UpstreamManager.getInstance());
+    public StreamEnvironmentImpl(String[] args) throws EnvironmentInitializationException{
+        super(args, UpstreamManager.getInstance(args));
     }
 }

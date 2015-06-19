@@ -13,7 +13,8 @@ public abstract class EnvironmentImpl implements AppEnvironment {
 
     private final IOrderProcessorManager orderProcessorManager;
 
-    protected EnvironmentImpl(String[] args, IOrderProcessorManagerCompCtrl controller) {
+    protected EnvironmentImpl(String[] args, IOrderProcessorManagerCompCtrl controller)
+            throws EnvironmentInitializationException {
         this.controller = controller;
         this.orderProcessorManager = new OrderProcessorManager();
         this.controller.register(this.orderProcessorManager);
