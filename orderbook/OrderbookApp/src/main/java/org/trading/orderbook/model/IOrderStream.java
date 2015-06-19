@@ -6,8 +6,6 @@ import org.trading.orderbook.model.impl.Order;
 
 public interface IOrderStream {
 
-    public void setContext(IContext context);
-
     void register(IOrderStreamListener listener);
 
     void openStream() throws Exception;

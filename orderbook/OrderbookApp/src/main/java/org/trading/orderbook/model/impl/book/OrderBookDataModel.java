@@ -30,8 +30,6 @@ public class OrderBookDataModel {
     // all components that will be notified on model changes
     private final List<IModelObserver> modelObservers;
 
-    private final boolean isLogging;
-
     private final IModelObserver observer = new DefaultModelObserver() {
 
         @Override
@@ -64,13 +62,11 @@ public class OrderBookDataModel {
         }
     };
 
-    public OrderBookDataModel(IdContainer idContainer, boolean isLogging) {
-        this.isLogging = isLogging;
+    public OrderBookDataModel(IdContainer idContainer) {
         this.idContainer = idContainer;
-        modelObservers = new ArrayList<IModelObserver>();
+        modelObservers = new ArrayList<>();
         sellOrdersPerSide = new SellOrdersPerSide(observer);
         buyOrdersPerSide = new BuyOrdersPerSide(observer);
-        //register(observer);
     }
 
     public void add(Order order) {

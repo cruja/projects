@@ -1,7 +1,6 @@
 package org.trading.orderbook.model.impl.book;
 
 import org.trading.orderbook.gui.OrderBookGui;
-import org.trading.orderbook.model.IContext;
 import org.trading.orderbook.model.IModelObserver;
 import org.trading.orderbook.model.IOrderBook;
 import org.trading.orderbook.model.IOrderConsumerComponent;
@@ -39,16 +38,14 @@ public class OrderBookManager {
 
     public IOrderConsumerComponent create(
             String bookName,
-            IContext context,
             IModelObserver modelObserver) {
 
         IOrderBook orderBook = new OrderBookImpl(
-                bookName,
-                context.isLogging());
+                bookName);
         orderBook.register(modelObserver);
-        if (context.isClientMode()) {
-            orderBook.registerForAggregator(
-                    new OrderBookGui(bookName, context));
+        if (true) {
+            orderBook.register(
+                    new OrderBookGui(bookName));
         }
         IOrderConsumerComponent orderBookWorker = new OrderBookWorker(orderBook);
         orderBookWorker.onStart();

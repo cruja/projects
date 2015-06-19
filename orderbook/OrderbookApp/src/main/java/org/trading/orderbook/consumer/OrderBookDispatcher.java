@@ -1,7 +1,6 @@
 package org.trading.orderbook.consumer;
 
 import org.trading.orderbook.consumer.exception.InvalidEventException;
-import org.trading.orderbook.model.IContext;
 import org.trading.orderbook.model.IModelObserver;
 import org.trading.orderbook.model.IOrderConsumerComponent;
 import org.trading.orderbook.model.IOrderProcessor;
@@ -20,10 +19,7 @@ public class OrderBookDispatcher implements IOrderProcessor {
 
     private OrderBookManager orderBookManager;
 
-    private final IContext context;
-
-    public OrderBookDispatcher(IContext context) {
-        this.context = context;
+    public OrderBookDispatcher() {
         orderBookManager = new OrderBookManager();
     }
 
@@ -82,7 +78,6 @@ public class OrderBookDispatcher implements IOrderProcessor {
         if (orderBook == null) {
             orderBook = orderBookManager.create(
                     bookName,
-                    context,
                     modelObserver);
         }
         return orderBook;

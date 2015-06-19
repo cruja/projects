@@ -32,14 +32,13 @@ public class OrderBookImpl implements IOrderBook {
 
     /**
      * @param name         the name of the order book
-     * @param isLogging    whether the book sends more detailed info to the standard output
      */
-    public OrderBookImpl(String name, boolean isLogging) {
+    public OrderBookImpl(String name) {
         this.name = name;
         this.modelObservers = new ArrayList<>();
         aggregator = new PriceLevelAggregator(name);
         idContainer = new OrderIdContainer();
-        dataModel = new OrderBookDataModel(idContainer, isLogging);
+        dataModel = new OrderBookDataModel(idContainer);
         dataModel.register(aggregator);
     }
 
@@ -49,7 +48,7 @@ public class OrderBookImpl implements IOrderBook {
     }
 
     @Override
-    public void registerForAggregator(IAggregatorListener aggregatorObserver) {
+    public void register(IAggregatorListener aggregatorObserver) {
         aggregator.register(aggregatorObserver);
     }
 

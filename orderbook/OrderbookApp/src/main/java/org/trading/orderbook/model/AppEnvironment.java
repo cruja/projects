@@ -5,8 +5,6 @@ package org.trading.orderbook.model;
  */
 public interface AppEnvironment {
 
-    IContext getContext();
-
     void registerProcessor(IOrderProcessor handler);
 
     void run();

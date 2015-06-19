@@ -2,7 +2,6 @@ package org.trading.orderbook.gui;
 
 
 import org.trading.orderbook.gui.model.OrderBookModel;
-import org.trading.orderbook.model.IContext;
 import org.trading.orderbook.model.impl.level.PriceLevel;
 import org.trading.orderbook.model.IAggregatorListener;
 import org.trading.orderbook.model.impl.side.OrdersPerSide;
@@ -13,8 +12,8 @@ public class OrderBookGui implements IAggregatorListener {
 
     private final OrderBookFrame orderBookFrame;
 
-    public OrderBookGui(String name, IContext context) {
-        orderBookModel = new OrderBookModel(context.getRefreshDelay());
+    public OrderBookGui(String name) {
+        orderBookModel = new OrderBookModel();
         orderBookFrame = new OrderBookFrame(name, orderBookModel);
     }
 

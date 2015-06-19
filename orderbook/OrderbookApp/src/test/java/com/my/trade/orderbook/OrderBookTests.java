@@ -21,7 +21,7 @@ public class OrderBookTests {
 
     @Test
     public void testOrderBook1() {
-        OrderBookImpl book = new OrderBookImpl("book-1", false);
+        OrderBookImpl book = new OrderBookImpl("book-1");
 
         final List<Integer> fills = new ArrayList<Integer>();
         IModelObserver onFillModelObserver = new DefaultModelObserver() {
@@ -67,7 +67,7 @@ public class OrderBookTests {
 
     @Test
     public void testOrderBook2() {
-        OrderBookImpl book = new OrderBookImpl("book-1", false);
+        OrderBookImpl book = new OrderBookImpl("book-1");
 
         final List<Integer> fills = new ArrayList<Integer>();
         IModelObserver modelObserver = new DefaultModelObserver() {
@@ -116,7 +116,7 @@ public class OrderBookTests {
 
     @Test
     public void testOrderBook3() {
-        OrderBookImpl book = new OrderBookImpl("book-1", false);
+        OrderBookImpl book = new OrderBookImpl("book-1");
 
         final List<Integer> fills = new ArrayList<Integer>();
         IModelObserver modelObserver = new DefaultModelObserver() {
@@ -169,7 +169,7 @@ public class OrderBookTests {
 
     @Test
     public void testOrderBook4() {
-        OrderBookImpl book = new OrderBookImpl("book-1", false);
+        OrderBookImpl book = new OrderBookImpl("book-1");
 
         final List<Integer> fills = new ArrayList<Integer>();
         IModelObserver modelObserver = new DefaultModelObserver() {
@@ -222,7 +222,7 @@ public class OrderBookTests {
 
     @Test
     public void testOrderBook5() {
-        OrderBookImpl book = new OrderBookImpl("book-1", false);
+        OrderBookImpl book = new OrderBookImpl("book-1");
 
         final List<Integer> fills = new ArrayList<Integer>();
         IModelObserver modelObserver = new DefaultModelObserver() {
@@ -269,7 +269,7 @@ public class OrderBookTests {
 
     @Test
     public void testOrderBook6() {
-        OrderBookImpl book = new OrderBookImpl("book-1", false);
+        OrderBookImpl book = new OrderBookImpl("book-1");
 
         final List<Integer> fills = new ArrayList<Integer>();
         IModelObserver modelObserver = new DefaultModelObserver() {
@@ -331,7 +331,7 @@ public class OrderBookTests {
 
     @Test
     public void testOrderBook7() {
-        OrderBookImpl book = new OrderBookImpl("book-1", false);
+        OrderBookImpl book = new OrderBookImpl("book-1");
 
         final List<Integer> fills = new ArrayList<Integer>();
         IModelObserver modelObserver = new DefaultModelObserver() {
@@ -399,7 +399,7 @@ public class OrderBookTests {
 
     @Test
     public void testOrderBook8() {
-        OrderBookImpl book = new OrderBookImpl("book-1", false);
+        OrderBookImpl book = new OrderBookImpl("book-1");
 
         final List<Event> events = new ArrayList<Event>();
 
@@ -490,7 +490,7 @@ public class OrderBookTests {
 
     @Test
     public void testOrderBook9() {
-        OrderBookImpl book = new OrderBookImpl("book-1", false);
+        OrderBookImpl book = new OrderBookImpl("book-1");
 
         final List<Integer> fills = new ArrayList<Integer>();
         IModelObserver modelObserver = new DefaultModelObserver() {
@@ -545,7 +545,7 @@ public class OrderBookTests {
 
     @Test
     public void testOrderBook10() {
-        OrderBookImpl book = new OrderBookImpl("book-1", false);
+        OrderBookImpl book = new OrderBookImpl("book-1");
 
         final List<Integer> fills = new ArrayList<Integer>();
         IModelObserver modelObserver = new DefaultModelObserver() {
@@ -600,7 +600,7 @@ public class OrderBookTests {
 
     @Test
     public void testAddOrderWithIdUsed() {
-        OrderBookImpl book = new OrderBookImpl("book-1", false);
+        OrderBookImpl book = new OrderBookImpl("book-1");
 
         Order order = new Order(1, "book-1", false, 10, 1);
         book.add(order);
@@ -615,7 +615,7 @@ public class OrderBookTests {
 
     @Test
     public void testAddDeleteAddSameOrder() {
-        OrderBookImpl book = new OrderBookImpl("book-1", false);
+        OrderBookImpl book = new OrderBookImpl("book-1");
 
         Order order = new Order(1, "book-1", false, 10, 1);
         try {
@@ -629,7 +629,7 @@ public class OrderBookTests {
 
     @Test
     public void testDeleteAlreadyFilledOrder1() {
-        OrderBookImpl book = new OrderBookImpl("book-1", false);
+        OrderBookImpl book = new OrderBookImpl("book-1");
 
         Order order_1 = new Order(1, "book-1", false, 10, 1);
         Order order_2 = new Order(2, "book-1", true, 11, 1);
@@ -646,7 +646,7 @@ public class OrderBookTests {
 
     @Test
     public void testDeleteAlreadyFilledOrder2() {
-        OrderBookImpl book = new OrderBookImpl("book-1", false);
+        OrderBookImpl book = new OrderBookImpl("book-1");
 
         Order[] orders = new Order[]{
                 new Order(1, "book-1", false, 14, 2),
@@ -673,7 +673,7 @@ public class OrderBookTests {
 
     @Test
     public void testAggregators() {
-        OrderBookImpl book = new OrderBookImpl("book-1", false);
+        OrderBookImpl book = new OrderBookImpl("book-1");
 
         final List<Integer> fills = new ArrayList<Integer>();
         IModelObserver modelObserver = new DefaultModelObserver() {

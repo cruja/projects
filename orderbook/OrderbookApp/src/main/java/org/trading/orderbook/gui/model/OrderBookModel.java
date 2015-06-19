@@ -16,12 +16,9 @@ public class OrderBookModel extends AbstractTableModel implements IModelObserver
 
     private final TableDataModel dataModel;
 
-    private final long refreshDelay;
-
-    public OrderBookModel(long refreshDelay) {
+    public OrderBookModel() {
         header = new String[]{"TotalOrders", "TotalVolume", "Price", "TotalVolume", "TotalOrders"};
         dataModel = new TableDataModel();
-        this.refreshDelay = refreshDelay;
     }
 
     @Override
@@ -55,7 +52,6 @@ public class OrderBookModel extends AbstractTableModel implements IModelObserver
 
     @Override
     public void onAdded(final int sellOrdCnt, final int sellAccVol, final double price, final int buyAccVol, final int buyOrdCnt) {
-        sleep();
         SwingUtilities.invokeLater(
                 new Runnable() {
                     @Override
@@ -69,7 +65,6 @@ public class OrderBookModel extends AbstractTableModel implements IModelObserver
 
     @Override
     public void onPriceRemoved(final double price) {
-        sleep();
         SwingUtilities.invokeLater(
                 new Runnable() {
                     @Override
@@ -84,7 +79,6 @@ public class OrderBookModel extends AbstractTableModel implements IModelObserver
 
     @Override
     public void onUpdated(final int sellOrdCnt, final int sellAccVol, final double price, final int buyAccVol, final int buyOrdCnt) {
-        sleep();
         SwingUtilities.invokeLater(
                 new Runnable() {
                     @Override
@@ -125,12 +119,5 @@ public class OrderBookModel extends AbstractTableModel implements IModelObserver
 
     @Override
     public void onOrderPartiallyFilled(long orderId, int size, int volFilled, int volRemained) {
-    }
-
-    private void sleep() {
-        try {
-            Thread.sleep(refreshDelay);
-        } catch (InterruptedException e) {
-        }
     }
 }

@@ -4,7 +4,6 @@ import org.trading.orderbook.connectors.upstream.commands.UpstreamCommandBuilder
 import org.trading.orderbook.infra.connectors.ActiveConnection;
 import org.trading.orderbook.infra.connectors.Connection;
 import org.trading.orderbook.infra.connectors.IMessageListener;
-import org.trading.orderbook.model.IContext;
 import org.trading.orderbook.model.IModelObserver;
 import org.trading.orderbook.model.impl.AbstractOrderStream;
 import org.trading.orderbook.model.impl.side.OrdersPerSide;
@@ -76,11 +75,6 @@ public class IncomingOrderStream extends AbstractOrderStream {
         messageProcessor = new UpstreamMessageProcessor(
                 this,
                 UpstreamCommandBuilder.getInstance());
-    }
-
-    @Override
-    public void setContext(IContext context) {
-
     }
 
     @Override

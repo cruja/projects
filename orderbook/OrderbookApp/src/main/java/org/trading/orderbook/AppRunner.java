@@ -17,7 +17,7 @@ public class AppRunner {
 
         try {
             AppEnvironment environment = new StreamEnvironmentImpl(args);
-            OrderBookDispatcher consumer = new OrderBookDispatcher(environment.getContext());
+            OrderBookDispatcher consumer = new OrderBookDispatcher();
             environment.registerProcessor(consumer);
             environment.run();
         } catch (Exception e) {

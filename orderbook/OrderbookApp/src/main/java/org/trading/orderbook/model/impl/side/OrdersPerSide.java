@@ -46,7 +46,7 @@ public abstract class OrdersPerSide {
     public abstract double getBestPrice();
 
     protected OrdersPerSide(String sideStr, int id, IModelObserver observer) {
-        priceToOrderLevelsMap = new TreeMap<Double, OrdersPerLevel>();
+        priceToOrderLevelsMap = new TreeMap<>();
         this.sideStr = sideStr;
         this.id = id;
         this.observer = observer;
