@@ -75,7 +75,7 @@
                     </descriptors>
                     <archive>
                         <manifest>
-                            <mainClass>org.trading.orderbook.AppRunner</mainClass>
+                            <mainClass>org.trading.orderbook.MatchingServer</mainClass>
                         </manifest>
                     </archive>
 

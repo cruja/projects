@@ -7,9 +7,9 @@ import org.trading.orderbook.consumer.OrderBookDispatcher;
 import org.trading.orderbook.model.AppEnvironment;
 
 
-public class AppRunner {
+public class MatchingServer {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(AppRunner.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MatchingServer.class);
 
     public static void main(String[] args) {
 

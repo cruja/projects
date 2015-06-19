@@ -28,14 +28,11 @@ public class OrderBookImpl implements IOrderBook {
     // an order with same ID as one existent will have no effect when deleted
     private final OrderIdContainer idContainer;
 
-    private final List<IAggregatorListener> modelObservers;
-
     /**
      * @param name         the name of the order book
      */
     public OrderBookImpl(String name) {
         this.name = name;
-        this.modelObservers = new ArrayList<>();
         aggregator = new PriceLevelAggregator(name);
         idContainer = new OrderIdContainer();
         dataModel = new OrderBookDataModel(idContainer);
