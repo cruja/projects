@@ -1,5 +1,7 @@
 package org.trading.orderbook.model.impl.book;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.trading.orderbook.model.IdContainer;
 import org.trading.orderbook.model.impl.Order;
 import org.trading.orderbook.model.impl.exception.OrderIdAlreadyExistsException;
@@ -13,6 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OrderBookDataModel {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(OrderBookDataModel.class);
 
     // stores all SELL orders from the current order book
     private final OrdersPerSide sellOrdersPerSide;
@@ -33,24 +37,24 @@ public class OrderBookDataModel {
         @Override
         public void onOrderFilled(long orderId, int volFilled) {
             fireOrderFilled(orderId, volFilled);
-            if (isLogging) {
-                System.out.println("Order " + orderId + " filled: " + volFilled + "@" + volFilled);
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Order " + orderId + " filled: " + volFilled + "@" + volFilled);
             }
         }
 
         @Override
         public void onOrderPartiallyFilled(long orderId, int size, int volFilled, int volRemained) {
             fireOrderPartiallyFilled(orderId, size, volFilled, volRemained);
-            if (isLogging) {
-                System.out.println("Order " + orderId + " partially filled: " + volFilled + "@" + volRemained);
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Order " + orderId + " partially filled: " + volFilled + "@" + volRemained);
             }
         }
 
         @Override
         public void onOrderDeleted(long orderId) {
             fireIdDeleted(orderId);
-            if (isLogging) {
-                System.out.println("Order " + orderId + " deleted");
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Order " + orderId + " deleted");
             }
         }
 
@@ -96,8 +100,8 @@ public class OrderBookDataModel {
 
     public void delete(Order order) {
         if (!idContainer.contains(order.getOrderId())) {
-            if (isLogging) {
-                System.out.println("WARN - no such order id to be deleted: " + order.getOrderId());
+            if (LOGGER.isWarnEnabled()) {
+                LOGGER.warn("no such order id to be deleted: " + order.getOrderId());
             }
             return;
         }
@@ -109,8 +113,8 @@ public class OrderBookDataModel {
 
     public void cancel(Order order) {
         if (!idContainer.contains(order.getOrderId())) {
-            if (isLogging) {
-                System.out.println("WARN - no such order id to be deleted: " + order.getOrderId());
+            if (LOGGER.isWarnEnabled()) {
+                LOGGER.warn("no such order id to be deleted: " + order.getOrderId());
             }
             return;
         }
@@ -125,8 +129,8 @@ public class OrderBookDataModel {
     }
 
     private Order fill(Order order, OrdersPerSide otherOrderOrdersPerSide) {
-        if (isLogging) {
-            System.out.println("Order " + order.getOrderId() + ": filling volume " + order.getVolume());
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Order " + order.getOrderId() + ": filling volume " + order.getVolume());
         }
         if (order.getVolume() >= otherOrderOrdersPerSide.getAccumulatedVolume()) {
             int filled = otherOrderOrdersPerSide.getAccumulatedVolume();
@@ -163,8 +167,8 @@ public class OrderBookDataModel {
         for (IModelObserver observer : modelObservers) {
             observer.onOrderAdded(orderId, size);
         }
-        if (isLogging) {
-            System.out.println("Order " + orderId + " added");
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Order " + orderId + " added");
         }
     }
 
@@ -194,8 +198,8 @@ public class OrderBookDataModel {
         for (IModelObserver observer : modelObservers) {
             observer.onFilled(volume);
         }
-        if (isLogging) {
-            System.out.println("Volume filled: " + volume);
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Volume filled: " + volume);
         }
     }
 

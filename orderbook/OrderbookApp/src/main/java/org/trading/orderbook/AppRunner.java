@@ -1,17 +1,19 @@
 package org.trading.orderbook;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.trading.orderbook.env.StreamEnvironmentImpl;
 import org.trading.orderbook.consumer.OrderBookDispatcher;
 import org.trading.orderbook.model.AppEnvironment;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class AppRunner {
 
-    private static Logger LOGGER = Logger.getLogger(AppRunner.class.getCanonicalName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(AppRunner.class);
 
     public static void main(String[] args) {
+
+        LOGGER.info("Starting order book server");
 
         try {
             AppEnvironment environment = new StreamEnvironmentImpl(args);
@@ -19,7 +21,7 @@ public class AppRunner {
             environment.registerProcessor(consumer);
             environment.run();
         } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "Failed starting the application", e);
+            LOGGER.error("Failed starting the application", e.getMessage(), e);
         }
     }
 }

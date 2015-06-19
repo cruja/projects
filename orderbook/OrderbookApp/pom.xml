@@ -11,8 +11,9 @@
     <properties>
         <jdk.version>1.8</jdk.version>
         <junit.version>4.11</junit.version>
-        <log4j.version>1.2.17</log4j.version>
+        <apache.log4j.version>2.3</apache.log4j.version>
         <surefire.version>2.18.1</surefire.version>
+        <slf4j.version>1.7.7</slf4j.version>
     </properties>
 
     <dependencies>
@@ -22,9 +23,24 @@
             <version>${junit.version}</version>
         </dependency>
         <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>${log4j.version}</version>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>${apache.log4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>${apache.log4j.version}</version>
         </dependency>
         <dependency>
             <groupId>org.trading.orderbook.infra</groupId>
@@ -49,17 +65,33 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${surefire.version}</version>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
+                <artifactId>maven-assembly-plugin</artifactId>
                 <configuration>
+                    <descriptors>
+                        <descriptor>src/assembly/orderbook_assembly.xml</descriptor>
+                    </descriptors>
                     <archive>
                         <manifest>
                             <mainClass>org.trading.orderbook.AppRunner</mainClass>
                         </manifest>
                     </archive>
+
                 </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
+
+
         </plugins>
     </build>
 </project>
