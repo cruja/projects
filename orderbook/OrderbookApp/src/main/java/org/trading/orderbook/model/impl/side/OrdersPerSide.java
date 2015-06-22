@@ -2,6 +2,7 @@ package org.trading.orderbook.model.impl.side;
 
 import org.trading.orderbook.model.IModelObserver;
 import org.trading.orderbook.model.impl.Order;
+import org.trading.orderbook.model.impl.PositionsManager;
 import org.trading.orderbook.model.impl.level.OrdersPerLevel;
 
 import java.util.*;
@@ -51,6 +52,9 @@ public abstract class OrdersPerSide {
         this.id = id;
         this.observer = observer;
     }
+
+
+    public abstract boolean isBuy();
 
     public void add(Order order) {
         double price = order.getPrice();
@@ -132,6 +136,7 @@ public abstract class OrdersPerSide {
 
             }
             observer.onUpdate(this, bestPrice);
+            PositionsManager.getInstance().onFill(isBuy(), bestPrice, filled);
             refresh();
             volumeToFill -= filled;
         }
@@ -147,6 +152,7 @@ public abstract class OrdersPerSide {
         for (Map.Entry<Double, OrdersPerLevel> entry : priceToOrderLevelsMap.entrySet()) {
             entry.getValue().fillAll();
             observer.onUpdate(this, entry.getKey());
+            PositionsManager.getInstance().onFill(isBuy(), entry.getKey(), entry.getValue().getAccumulatedVolume());
         }
 
         priceToOrderLevelsMap.clear();

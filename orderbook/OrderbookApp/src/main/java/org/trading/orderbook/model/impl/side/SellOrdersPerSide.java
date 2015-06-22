@@ -10,6 +10,11 @@ public class SellOrdersPerSide extends OrdersPerSide {
     }
 
     @Override
+    public boolean isBuy() {
+        return false;
+    }
+
+    @Override
     public double getBestPrice() {
         return getLowestPrice();
     }

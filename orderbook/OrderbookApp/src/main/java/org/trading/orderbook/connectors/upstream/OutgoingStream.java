@@ -2,14 +2,26 @@ package org.trading.orderbook.connectors.upstream;
 
 import org.trading.orderbook.infra.connectors.Connection;
 import org.trading.orderbook.model.IModelObserver;
+import org.trading.orderbook.model.IPositionListener;
+import org.trading.orderbook.model.impl.PositionsManager;
 import org.trading.orderbook.model.impl.side.OrdersPerSide;
 
 public class OutgoingStream implements IModelObserver {
 
     private final Connection connection;
 
+    private final IPositionListener listener;
+
     public OutgoingStream(Connection connection) {
         this.connection = connection;
+        listener = new IPositionListener() {
+            @Override
+            public void positionChanged(double quantity, double amount) {
+                String message = "{position;" + quantity + ";" + amount + "}";
+                connection.sendMessage(message);
+            }
+        };
+        PositionsManager.getInstance().register(listener);
     }
 
     @Override

@@ -9,6 +9,11 @@ public class BuyOrdersPerSide extends OrdersPerSide {
     }
 
     @Override
+    public boolean isBuy() {
+        return true;
+    }
+
+    @Override
     public double getBestPrice() {
         return getHighestPrice();
     }
