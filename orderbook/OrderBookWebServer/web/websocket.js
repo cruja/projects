@@ -20,6 +20,9 @@ function onMessage(event) {
         case "cancelled":
             printOrder(order, 'filled');
             break;
+        case "position":
+            updatePositions(order);
+            break;
     }
 
 }
@@ -107,6 +110,21 @@ function fillOrder(order) {
     order_element.append(progressElement);
 }
 
+function updatePositions(data) {
+    var positionsElement = $("#positions");
+    
+    positionsElement.find("#position_quantity").remove()
+    positionsElement.find("#position_amount").remove()
+    
+    var positionQuantity = $('<span id=position_quantity/>');
+    positionQuantity.html('<b>Quantity:</b> ' + data.quantity);
+    positionsElement.append(positionQuantity);
+    
+    var positionAmount = $('<span id=position_amount/>');
+    positionAmount.html('<b>Amount:</b> ' + data.amount);
+    positionsElement.append(positionAmount);
+}
+
 function removeOrderElement(order) {
     $("#orders").find(".order_" + order.id).remove();
 }
@@ -129,7 +147,7 @@ function hideOrderRangeForm() {
 
 function removeAllNotPlaced() {
     var orderAction = {
-        action: "removeanp"        
+        action: "removeanp"
     };
     socket.send(JSON.stringify(orderAction));
 }

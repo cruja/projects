@@ -147,3 +147,21 @@ p {
     margin-top: 12px;
     text-align: left;
 }
+
+#position_quantity {
+    padding: 8px;
+    background-color: #f2791d;
+    color: #fff;
+    margin: auto;
+    width: 200px;
+    height: 50px;
+}
+
+#position_amount {
+    padding: 8px;
+    background-color: #f2791d;
+    color: #fff;
+    margin: auto;
+    height: 50px;
+    width: 200px;
+}

@@ -7,6 +7,7 @@ import org.trading.orderbook.connectors.commands.AbstractCommandBuildCommand;
 import org.trading.orderbook.connectors.downstream.commands.incomming.OrderFilledCommand;
 import org.trading.orderbook.connectors.downstream.commands.incomming.OrderPartiallyFilledCommand;
 import org.trading.orderbook.connectors.downstream.commands.incomming.OrderPlacedCommand;
+import org.trading.orderbook.connectors.downstream.commands.incomming.PositionCommand;
 import org.trading.orderbook.dispatch.DispatcherManager;
 import org.trading.orderbook.infra.connectors.processor.IMessageProcessingCommand;
 import org.trading.orderbook.session.SessionManager;
@@ -38,6 +39,22 @@ public class CommandBuildCommand extends AbstractCommandBuildCommand {
             case "partialfilled":
                 buildOrderPartiallyFilledCommand(tokens);
                 break;
+            case "position":
+                buildPositionCommand(tokens);
+                break;
+        }
+    }
+
+    private void buildPositionCommand(String[] tokens) {
+        PositionCommand command = buildPosition(tokens);
+        if (command != null) {
+            try {
+                queue.put(command);
+            } catch (InterruptedException ex) {
+                LOGGER.log(Level.SEVERE, "", ex);
+            }
+        } else {
+            LOGGER.log(Level.SEVERE, "Failed building order placed command");
         }
     }
 
@@ -117,6 +134,26 @@ public class CommandBuildCommand extends AbstractCommandBuildCommand {
 
             return new OrderFilledCommand(
                     sessionManager, id, fillSize);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    private PositionCommand buildPosition(String[] tokens) {
+
+        if (tokens == null || tokens.length != 3
+                || !isStringValid(tokens[1])
+                || !isStringValid(tokens[2])) {
+
+            return null;
+        }
+
+        try {
+            double quantity = Double.parseDouble(tokens[1]);
+            double amount = Double.parseDouble(tokens[2]);
+
+            return new PositionCommand(
+                    sessionManager, quantity, amount);
         } catch (Exception e) {
             return null;
         }
